@@ -212,4 +212,5 @@ treeNode *insertNodeAVL(treeNode *tree, int value) // Incompleto
         tree->left = rotateLeft(tree->left);
         return rotateRight(tree);
     }
+    if // teste ssaasa dfkaskldfa
 }
