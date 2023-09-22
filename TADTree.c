@@ -120,28 +120,6 @@ bool equalTrees(treeNode *treeA, treeNode *treeB)
     return leftEqual && rightEqual;
 }
 
-treeNode *insertNodeBST(treeNode *tree, int value)
-{
-    if (tree == NULL)
-    {
-        treeNode *newNode = createNode(value);
-        return newNode;
-    }
-    if (tree->value > value)
-    {
-        tree->left = insertNodeBST(tree->left, value);
-    }
-    else if (tree->value < value)
-    {
-        tree->right = insertNodeBST(tree->right, value);
-    }
-    else
-    {
-        printf("ERRO! Valor repetido.\n");
-    }
-    return tree;
-}
-
 int treeHeight(treeNode *tree)
 {
     if (tree == NULL)
@@ -182,35 +160,54 @@ treeNode *rotateRight(treeNode *tree)
     return newNode;
 }
 
-treeNode *insertNodeAVL(treeNode *tree, int value) // Incompleto
+treeNode *insertNodeBST(treeNode *tree, int value)
 {
     if (tree == NULL)
     {
         treeNode *newNode = createNode(value);
+        return newNode;
     }
     if (tree->value > value)
     {
-        tree->left = insertNodeAVL(tree->left, value);
+        tree->left = insertNodeBST(tree->left, value);
     }
-    if (tree->value < value)
+    else if (tree->value < value)
     {
-        tree->right = insertNodeAVL(tree->right, value);
+        tree->right = insertNodeBST(tree->right, value);
     }
     else
     {
         printf("ERRO! Valor repetido.\n");
-        return tree;
     }
-    int bf = balanceFactor(tree);
-    if (bf > 1)
+    return tree;
+}
+
+treeNode *insertNodeAVL(treeNode *tree, int value)
+{
+    treeNode *newTree = insertNodeBST(tree, value);
+    if (balanceFactor(newTree) > 1)
     {
-        value < tree->left->value;
-        return rotateRight(tree);
+        if (value < newTree->left->value)
+        {
+            return rotateRight(newTree);
+        }
+        else
+        {
+            newTree->left = rotateLeft(newTree->left);
+            return rotateRight(newTree);
+        }
     }
-    else
+    if (balanceFactor(newTree) < -1)
     {
-        tree->left = rotateLeft(tree->left);
-        return rotateRight(tree);
+        if (value > newTree->right->value)
+        {
+            return rotateLeft(newTree);
+        }
+        else
+        {
+            newTree->right = rotateRight(newTree);
+            return rotateLeft(newTree);
+        }
     }
-    if // teste ssaasa dfkaskldfa
+    return newTree;
 }
