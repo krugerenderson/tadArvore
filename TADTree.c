@@ -201,5 +201,15 @@ treeNode *insertNodeAVL(treeNode *tree, int value) // Incompleto
         printf("ERRO! Valor repetido.\n");
         return tree;
     }
-    int fb = balanceFactor(tree);
+    int bf = balanceFactor(tree);
+    if (bf > 1)
+    {
+        value < tree->left->value;
+        return rotateRight(tree);
+    }
+    else
+    {
+        tree->left = rotateLeft(tree->left);
+        return rotateRight(tree);
+    }
 }
